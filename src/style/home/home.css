@@ -1,0 +1,30 @@
+/*------  未登录  ------*/
+header.my{background-color: #F83752;padding-top:0.44rem; color: #fff; font-size: 0.27rem;}
+.my .login-icon{text-align: center;padding-top: 0.42rem;}
+.my .to-login-link{display: inline-block;}
+.my .to-login-link-tel{margin-right: 1.2rem;}
+.my .to-login{width: 1.14rem;}
+.my .login-prompt{width: 1.9rem;margin: 0.1rem auto;padding-top: 0.02rem; padding-bottom: 0.05rem  ; border-radius: 0.5rem;background-color: #942132;letter-spacing: 0.1rem}
+
+.my .top-nav{background-color: #942132;padding: 0.1rem 0.25rem;}
+.my .top-nav:after,.my-user-con .user-Order:after,.my-user-con .order-Status ul:after,.my .user-infor:after{display: block;clear: both;content: "";visibility: hidden;height: 0}
+.my .top-nav li{float: left;width: 25%;}
+.my .top-nav li a{display: inline-block; width: 100%;color: #fff;text-align: center; border-left: 0.01rem solid #fff;}
+.my .top-nav li:last-child  a{border-right: 0.01px solid #fff;}
+
+
+
+.my-user-con{padding: 0.1rem 0;font-size: 0.27rem;background-color: #F2EEF1;}
+
+.my-user-con .user-item-wrap{ background-color: #fff; border-bottom: 0.1rem solid #F2EEF1;}
+.my-user-con .user-Order{display:block;color: #535353; padding: 0.2rem 1rem 0.2rem 0.35rem;background: url(../images/icon_r.png) 95% center no-repeat;background-size: 0.5rem;border-bottom: 0.02rem solid #F2EEF1;}
+
+.my-user-con .order-Status{padding: 0.2rem 0.2rem 0.2rem 0rem;}
+.my-user-con .order-Status li{float: left; width: 20%;}
+.my-user-con .order-Status a{display: inline-block;width: 100%;text-align: center;color: #434343;}
+.my-user-con .order-Status li .icon-order{width: 0.62rem;}
+
+.my-user-con .user-item{display:block;color: #535353;padding: 0.13rem 1rem 0.13rem 0.2rem;background: url(../images/icon_r.png) 95% center no-repeat;background-size: 0.5rem;border-bottom: 0.02rem solid #F2EEF1;}
+.my-user-con .user-item img{width: 0.5rem;vertical-align: middle;margin-right: 0.2rem;}
+
+
