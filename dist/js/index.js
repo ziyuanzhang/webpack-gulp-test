@@ -1,0 +1,1 @@
+webpackJsonp([0],[,,,function(n,o,c){c(0),c(4),n.exports=c(2)},function(n,o){console.log("这是index JS")}],[3]);

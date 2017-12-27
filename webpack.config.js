@@ -7,6 +7,7 @@ var uglifyJsPlugin = webpack.optimize.UglifyJsPlugin;
 var srcDir = path.resolve(process.cwd(), 'src');
 
 //获取多页面的每个入口文件，用于配置中的entry
+/*
 function getEntry() {
     var jsPath = path.resolve(srcDir, 'js');
     var dirs = fs.readdirSync(jsPath);
@@ -21,11 +22,15 @@ function getEntry() {
     console.log(JSON.stringify(files));
     return files;
 }
-
+*/
 module.exports = {
     cache: true,
     devtool: "#source-map",
-    entry: getEntry(),
+    entry: /* getEntry(), */
+    {
+        index:["./src/vendor/jquery/jquery-1.7.2.min.js","./src/js/index/index.js","./src/js/common/common.js"],
+        home:["./src/vendor/jquery/jquery-1.7.2.min.js","./src/js/home/home.js","./src/js/common/common.js"]
+    },
     output: {
         path: path.join(__dirname, "dist/js/"),
         publicPath: "dist/js/",
@@ -34,9 +39,9 @@ module.exports = {
     },
     resolve: {
         alias: {
-            jquery: srcDir + "/js/lib/jquery.min.js",
-            core: srcDir + "/js/core",
-            ui: srcDir + "/js/ui"
+            jquery: srcDir + "/vendor/jquery/jquery-1.7.2.min.js"
+            /* core: srcDir + "/js/core",
+            ui: srcDir + "/js/ui" */
         }
     },
     plugins: [

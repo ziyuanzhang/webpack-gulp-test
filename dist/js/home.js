@@ -1,0 +1,1 @@
+webpackJsonp([1],{5:function(o,n,c){c(0),c(6),o.exports=c(2)},6:function(o,n){console.log("这是home JS")}},[5]);

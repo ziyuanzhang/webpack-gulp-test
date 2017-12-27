@@ -18,7 +18,8 @@ var gulp = require('gulp'),
     base64 = require('gulp-css-base64'),
     webpack = require('webpack'),
     webpackConfig = require('./webpack.config.js'),
-    connect = require('gulp-connect');
+    connect = require('gulp-connect'),
+    groupConcat = require('gulp-group-concat');
 
 var host = {
     path: 'dist/',
@@ -34,16 +35,20 @@ var pkg = require('./package.json');
 
 //将图片拷贝到目标目录
 gulp.task('copy:images', function (done) {
-    gulp.src(['src/images/**/*']).pipe(gulp.dest('dist/images')).on('end', done);
+    gulp.src(['src/assets/**/*']).pipe(gulp.dest('dist/assets')).on('end', done);
 });
 
 //压缩合并css, css中既有自己写的.less, 也有引入第三方库的.css
 gulp.task('lessmin', function (done) {
-    gulp.src(['src/css/main.less', 'src/css/*.css'])
-        .pipe(less())
+    gulp.src(['src/css/common/base.css',"src/css/index/index.css"])
+        /* .pipe(less()) */
         //这里可以加css sprite 让每一个css合并为一个雪碧图
         //.pipe(spriter({}))
-        .pipe(concat('style.min.css'))
+        .pipe(concat('index.css'))
+    /*     .pipe(groupConcat({
+            "home.css":"src/css/home/home.css",
+            "index.css":"src/css/index/index.css"
+        })) */
         .pipe(gulp.dest('dist/css/'))
         .on('end', done);
 });
@@ -51,7 +56,7 @@ gulp.task('lessmin', function (done) {
 //将js加上10位md5,并修改html中的引用路径，该动作依赖build-js
 gulp.task('md5:js', ['build-js'], function (done) {
     gulp.src('dist/js/*.js')
-        .pipe(md5(10, 'dist/app/*.html'))
+        .pipe(md5(10, 'dist/html/*.html'))
         .pipe(gulp.dest('dist/js'))
         .on('end', done);
 });
@@ -59,19 +64,19 @@ gulp.task('md5:js', ['build-js'], function (done) {
 //将css加上10位md5，并修改html中的引用路径，该动作依赖sprite
 gulp.task('md5:css', ['sprite'], function (done) {
     gulp.src('dist/css/*.css')
-        .pipe(md5(10, 'dist/app/*.html'))
+        .pipe(md5(10, 'dist/html/*.html'))
         .pipe(gulp.dest('dist/css'))
         .on('end', done);
 });
 
 //用于在html文件中直接include文件
 gulp.task('fileinclude', function (done) {
-    gulp.src(['src/app/*.html'])
+    gulp.src(['src/html/*.html'])
         .pipe(fileinclude({
             prefix: '@@',
             basepath: '@file'
         }))
-        .pipe(gulp.dest('dist/app'))
+        .pipe(gulp.dest('dist/html'))
         .on('end', done);
     // .pipe(connect.reload())
 });
@@ -117,7 +122,7 @@ gulp.task('open', function (done) {
     gulp.src('')
         .pipe(gulpOpen({
             app: browser,
-            uri: 'http://localhost:3000/app'
+            uri: 'http://localhost:3000/html'
         }))
         .on('end', done);
 });
@@ -129,7 +134,7 @@ var devCompiler = webpack(myDevConfig);
 //引用webpack对js进行操作
 gulp.task("build-js", ['fileinclude'], function (callback) {
     devCompiler.run(function (err, stats) {
-        if (err) throw new gutil.PluginError("webpack:build-js", err);
+        if (err) {throw new gutil.PluginError("webpack:build-js", err);}
         gutil.log("[webpack:build-js]", stats.toString({
             colors: true
         }));
