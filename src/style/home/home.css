@@ -17,14 +17,15 @@ header.my{background-color: #F83752;padding-top:0.44rem; color: #fff; font-size:
 .my-user-con{padding: 0.1rem 0;font-size: 0.27rem;background-color: #F2EEF1;}
 
 .my-user-con .user-item-wrap{ background-color: #fff; border-bottom: 0.1rem solid #F2EEF1;}
-.my-user-con .user-Order{display:block;color: #535353; padding: 0.2rem 1rem 0.2rem 0.35rem;background: url(../images/icon_r.png) 95% center no-repeat;background-size: 0.5rem;border-bottom: 0.02rem solid #F2EEF1;}
+.my-user-con .user-Order{display:block;color: #535353; padding: 0.2rem 1rem 0.2rem 0.35rem;background: url(../assets/images/icon_r.png) 95% center no-repeat;background-size: 0.5rem;border-bottom: 0.02rem solid #F2EEF1;}
 
 .my-user-con .order-Status{padding: 0.2rem 0.2rem 0.2rem 0rem;}
 .my-user-con .order-Status li{float: left; width: 20%;}
 .my-user-con .order-Status a{display: inline-block;width: 100%;text-align: center;color: #434343;}
 .my-user-con .order-Status li .icon-order{width: 0.62rem;}
 
-.my-user-con .user-item{display:block;color: #535353;padding: 0.13rem 1rem 0.13rem 0.2rem;background: url(../images/icon_r.png) 95% center no-repeat;background-size: 0.5rem;border-bottom: 0.02rem solid #F2EEF1;}
+.my-user-con .user-item{display:block;color: #535353;padding: 0.13rem 1rem 0.13rem 0.2rem;background: url(../assets/images/icon_r.png) 95% center no-repeat;background-size: 0.5rem;border-bottom: 0.02rem solid #F2EEF1;}
 .my-user-con .user-item img{width: 0.5rem;vertical-align: middle;margin-right: 0.2rem;}
-
+.my{ transform: rotate(45deg);
+    display: flex;}
 
