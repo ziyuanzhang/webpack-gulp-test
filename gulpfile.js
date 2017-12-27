@@ -1,6 +1,6 @@
 /**
  Gulpfile for gulp-webpack-demo
- created by fwon
+ gulp os gulp-util gulp-less gulp-concat  gulp-open  gulp-uglify  gulp-cssmin gulp-md5-plus  gulp-file-include  gulp-clean gulp-css-spriter gulp-css-base64 webpack gulp-connect
 */
 
 var gulp = require('gulp'),
