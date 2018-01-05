@@ -1,26 +1,29 @@
-const gulp = require('gulp');
-const os = require('os');
+/**
+ Gulpfile for gulp-webpack-demo
+ gulp os gulp-util gulp-less gulp-concat  gulp-open  gulp-uglify  gulp-cssmin gulp-md5-plus  gulp-file-include  gulp-clean gulp-css-spriter gulp-css-base64 webpack gulp-connect
+*/
 
-const webpack = require('webpack');
-const gutil = require('gulp-util');
-const config = require('./webpack.config.test.js');
-
-const concat = require('gulp-concat');
-
-const md5 = require('gulp-md5-plus');
-const fileinclude = require('gulp-file-include');
-
-const spriter = require('gulp-css-spriter');
-const base64 = require('gulp-css-base64');
-
-const cssmin = require('gulp-cssmin');
-const clean = require('gulp-clean');
-const connect = require('gulp-connect');
-const gulpOpen = require('gulp-open');
+var gulp = require('gulp'),
+    os = require('os'),
+    gutil = require('gulp-util'),
+    less = require('gulp-less'),
+    concat = require('gulp-concat'),
+    gulpOpen = require('gulp-open'),
+    uglify = require('gulp-uglify'),
+    cssmin = require('gulp-cssmin'),
+    md5 = require('gulp-md5-plus'),
+    fileinclude = require('gulp-file-include'),
+    clean = require('gulp-clean'),
+    spriter = require('gulp-css-spriter'),
+    base64 = require('gulp-css-base64'),
+    webpack = require('webpack'),
+    webpackConfig = require('./webpack.config.js'),
+    connect = require('gulp-connect'),
+    groupConcat = require('gulp-group-concat');
 
 var host = {
     path: 'dist/',
-    port: 8000,
+    port: 3000,
     html: 'index.html'
 };
 
@@ -28,33 +31,36 @@ var host = {
 var browser = os.platform() === 'linux' ? 'Google chrome' : (
     os.platform() === 'darwin' ? 'Google chrome' : (
         os.platform() === 'win32' ? 'chrome' : 'firefox'));
+var pkg = require('./package.json');
 
 //将图片拷贝到目标目录
 gulp.task('copy:images', function (done) {
     gulp.src(['src/assets/**/*']).pipe(gulp.dest('dist/assets')).on('end', done);
 });
 
-//压缩合并css
-gulp.task('cssmin1', function (done) {
-    gulp.src(['src/css/common/base.css', 'src/css/index/index.css'])
+//压缩合并css, css中既有自己写的.less, 也有引入第三方库的.css
+gulp.task('lessmin', function (done) {
+    gulp.src(['src/css/common/base.css',"src/css/index/index.css"])
+        /* .pipe(less()) */
+        //这里可以加css sprite 让每一个css合并为一个雪碧图
+        //.pipe(spriter({}))
         .pipe(concat('index.css'))
-        .pipe(gulp.dest('dist/css/'))
-        .on('end', done);
-});
-gulp.task('cssmin2', function (done) {
-    gulp.src(['src/css/common/base.css', 'src/css/home/home.css'])
-        .pipe(concat('index.css'))
+    /*     .pipe(groupConcat({
+            "home.css":"src/css/home/home.css",
+            "index.css":"src/css/index/index.css"
+        })) */
         .pipe(gulp.dest('dist/css/'))
         .on('end', done);
 });
 
-//将js加上10位md5,并修改html中的引用路径，该动作依赖 webpack:build-js
-gulp.task('md5:js', ['webpack:build-js'], function (done) {
+//将js加上10位md5,并修改html中的引用路径，该动作依赖build-js
+gulp.task('md5:js', ['build-js'], function (done) {
     gulp.src('dist/js/*.js')
         .pipe(md5(10, 'dist/html/*.html'))
         .pipe(gulp.dest('dist/js'))
         .on('end', done);
 });
+
 //将css加上10位md5，并修改html中的引用路径，该动作依赖sprite
 gulp.task('md5:css', ['sprite'], function (done) {
     gulp.src('dist/css/*.css')
@@ -76,9 +82,9 @@ gulp.task('fileinclude', function (done) {
 });
 
 //雪碧图操作，应该先拷贝图片并压缩合并css
-gulp.task('sprite', ['copy:images', 'cssmin1','cssmin2'], function (done) {
+gulp.task('sprite', ['copy:images', 'lessmin'], function (done) {
     var timestamp = +new Date();
-    gulp.src('dist/css/*.css')
+    gulp.src('dist/css/style.min.css')
         .pipe(spriter({
             spriteSheet: 'dist/images/spritesheet' + timestamp + '.png',
             pathToSpriteSheetFromCSS: '../images/spritesheet' + timestamp + '.png',
@@ -99,7 +105,7 @@ gulp.task('clean', function (done) {
 });
 
 gulp.task('watch', function (done) {
-    gulp.watch('src/**/*', ['cssmin1','cssmin2', 'webpack:build-js', 'fileinclude'])
+    gulp.watch('src/**/*', ['lessmin', 'build-js', 'fileinclude'])
         .on('end', done);
 });
 
@@ -111,9 +117,6 @@ gulp.task('connect', function () {
         livereload: true
     });
 });
-gulp.task("closeServe",function(){
-    connect.serverClose();
-});
 
 gulp.task('open', function (done) {
     gulp.src('')
@@ -124,13 +127,15 @@ gulp.task('open', function (done) {
         .on('end', done);
 });
 
-//调用并执行webpack
-gulp.task('webpack:build-js', function (callback) {
-    webpack(config).run(function (err, stats) {
-        if (err) {
-            throw new gutil.PluginError('webpack:build-js', err);
-        }
-        gutil.log('[webpack:build-js]', stats.toString({
+var myDevConfig = Object.create(webpackConfig);
+
+var devCompiler = webpack(myDevConfig);
+
+//引用webpack对js进行操作
+gulp.task("build-js", ['fileinclude'], function (callback) {
+    devCompiler.run(function (err, stats) {
+        if (err) {throw new gutil.PluginError("webpack:build-js", err);}
+        gutil.log("[webpack:build-js]", stats.toString({
             colors: true
         }));
         callback();
@@ -141,4 +146,4 @@ gulp.task('webpack:build-js', function (callback) {
 gulp.task('default', ['connect', 'fileinclude', 'md5:css', 'md5:js', 'open']);
 
 //开发
-gulp.task('dev', ['connect', 'copy:images', 'fileinclude', 'cssmin1','cssmin2', 'build-js', 'watch', 'open']);
+gulp.task('dev', ['connect', 'copy:images', 'fileinclude', 'lessmin', 'build-js', 'watch', 'open']);
