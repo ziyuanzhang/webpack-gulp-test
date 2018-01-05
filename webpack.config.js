@@ -1,3 +1,5 @@
+/* ./node_modules/.bin/webpack --config webpack.config.js */
+
 var CommonsChunkPlugin = require("webpack/lib/optimize/CommonsChunkPlugin");
 var path = require('path');
 var webpack = require('webpack');
