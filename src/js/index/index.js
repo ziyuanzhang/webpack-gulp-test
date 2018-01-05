@@ -1,1 +1,5 @@
-console.log("这是index JS");
+
+function a(){
+    console.log("这是index JS");
+}
+a();
