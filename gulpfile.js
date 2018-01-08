@@ -16,11 +16,13 @@ const base64 = require('gulp-css-base64');
 const cssmin = require('gulp-cssmin');
 const clean = require('gulp-clean');
 const connect = require('gulp-connect');
+const proxy = require('http-proxy-middleware');
 const gulpOpen = require('gulp-open');
+
 
 var host = {
     path: 'dist/',
-    port: 8000,
+    port: 3000,
     html: 'index.html'
 };
 
@@ -108,7 +110,19 @@ gulp.task('connect', function () {
     connect.server({
         root: host.path,
         port: host.port,
-        livereload: true
+        livereload: true,
+/*         middleware: function(connect, opt) {
+            return [
+                proxy('/api',  {
+                    target: 'http://localhost:8080',
+                    changeOrigin:true
+                }),
+                proxy('/otherServer', {
+                    target: 'http://IP:Port',
+                    changeOrigin:true
+                })
+            ]
+        } */
     });
 });
 gulp.task("closeServe",function(){
@@ -141,4 +155,4 @@ gulp.task('webpack:build-js', function (callback) {
 gulp.task('default', ['connect', 'fileinclude', 'md5:css', 'md5:js', 'open']);
 
 //开发
-gulp.task('dev', ['connect', 'copy:images', 'fileinclude', 'cssmin1','cssmin2', 'build-js', 'watch', 'open']);
+gulp.task('dev', ['connect', 'copy:images', 'fileinclude', 'cssmin1','cssmin2', 'webpack:build-js', 'watch', 'open']);
