@@ -111,18 +111,18 @@ gulp.task('connect', function () {
         root: host.path,
         port: host.port,
         livereload: true,
-/*         middleware: function(connect, opt) {
+        middleware: function(connect, opt) {
             return [
                 proxy('/api',  {
                     target: 'http://localhost:8080',
                     changeOrigin:true
                 }),
-                proxy('/otherServer', {
-                    target: 'http://IP:Port',
+                proxy('/v1', {
+                    target: 'https://api.digitalriver.com',
                     changeOrigin:true
                 })
             ]
-        } */
+        }
     });
 });
 gulp.task("closeServe",function(){
@@ -156,3 +156,6 @@ gulp.task('default', ['connect', 'fileinclude', 'md5:css', 'md5:js', 'open']);
 
 //开发
 gulp.task('dev', ['connect', 'copy:images', 'fileinclude', 'cssmin1','cssmin2', 'webpack:build-js', 'watch', 'open']);
+
+
+
