@@ -45,7 +45,7 @@ gulp.task('cssmin1', function (done) {
 });
 gulp.task('cssmin2', function (done) {
     gulp.src(['src/css/common/base.css', 'src/css/home/home.css'])
-        .pipe(concat('index.css'))
+        .pipe(concat('home.css'))
         .pipe(gulp.dest('dist/css/'))
         .on('end', done);
 });
