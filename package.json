@@ -34,5 +34,8 @@
     "gulp-util": "^3.0.8",
     "os": "^0.1.1",
     "webpack": "^3.10.0"
+  },
+  "devDependencies": {
+    "http-proxy-middleware": "^0.17.4"
   }
 }
