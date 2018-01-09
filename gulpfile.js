@@ -120,7 +120,8 @@ gulp.task('connect', function () {
                 proxy('/v1', {
                     target: 'https://api.digitalriver.com',
                     changeOrigin:true
-                })
+                    
+                }) 
             ]
         }
     });
