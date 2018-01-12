@@ -1,7 +1,18 @@
 <head>
-	<meta charset="utf-8">
 	<title>商城首页</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
+    <meta charset="utf-8">
+	<meta name="keywors" content="aa,ca,aad,ddd">
+	<meta name="description" content="">
+	
+	<meta name="format-detection" content="telephone=no">
+    <meta name="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="" content="">
+	<!-- 5秒自动跳转到百度
+	<meta http-equiv="Refresh" content="5;url=http://baidu.com"> -->
+	
+	<meta content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0,user-scalable=no" name="viewport" id="viewport" />
+
 	<link rel="stylesheet" href="../css/index.css">
 	<script type="text/javascript">		
 		var deviceWidth = document.documentElement.clientWidth;
