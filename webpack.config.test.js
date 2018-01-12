@@ -15,6 +15,7 @@ module.exports = {
     },
     resolve: {
         alias: {
+            /* 创建 import 或 require 的别名，来确保模块引入变得更简单 */
             jquery: srcDir + "/vendor/jquery/jquery-1.7.2.min.js",
             common: srcDir + "/js/common/common.js"
         }
