@@ -1,4 +1,4 @@
-/* ./node_modules/.bin/webpack --config webpack.config.test.js */
+/*运行webpack ./node_modules/.bin/webpack --config webpack.config.test.js */
 
 var webpack = require("webpack");
 var path = require('path');

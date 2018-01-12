@@ -1,13 +1,13 @@
 <head>
 	<title>商城首页</title>
-	
+
     <meta charset="utf-8">
 	<meta name="keywors" content="aa,ca,aad,ddd">
 	<meta name="description" content="">
 	
 	<meta name="format-detection" content="telephone=no">
-    <meta name="X-UA-Compatible" content="IE=edge,chrome=1">
-	<meta name="" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"/>
+	<meta name="author" content="2661548928@qq.com">
 	<!-- 5秒自动跳转到百度
 	<meta http-equiv="Refresh" content="5;url=http://baidu.com"> -->
 	
